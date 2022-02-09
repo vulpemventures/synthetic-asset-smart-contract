@@ -1,0 +1,17 @@
+---
+title: Synthetic asset smart contract for the Liquid network
+author:
+  - Marco Argentieri
+  - Andrew Camilleri
+  - Dmitry Petukhov
+
+abstract: |
+  Synthetic assets are collateral-backed assets whose value fluctuates depending on a reference price. We propose a scheme where anyone can lock collateral on the Liquid Network to issue assets that track the price of a chosen real-world asset, such as dollars or stocks. The Elements enhanced scripting capabilities allow non-interactive redemption and liquidation when the collateral's value is underwater, with the possibility to top up the collateral to prevent liquidation.
+
+figPrefix:
+  - "Fig."
+  - "Figs."
+secPrefix:
+  - "Section"
+  - "Sections"
+...
