@@ -7,7 +7,7 @@ Synthetic assets are collateral-backed assets whose value fluctuates depending o
 Semi-formal description document is published with each [release](https://github.com/vulpemventures/synthetic-asset-smart-contract/releases).
 
 
-## `TL:DR`
+## `TL;DR`
 
 ### Actors
 
@@ -29,6 +29,6 @@ NOTICE: **Sponsor** can always redeem at all times in a non-interactive fashion 
 
 ## How it works
 
-![High Level Contract Interaction Funding & Redeem](./document/images/Funding-Redeem.png)
-![High Level Contract Interaction Liquidation](./document/images/Liquidation.png)
-![High Level Contract Interaction Topup](./document/images/Topup.png)
+![High Level Contract Interaction Funding & Redeem](./images/Funding-Redeem.png)
+![High Level Contract Interaction Liquidation](./images/Liquidation.png)
+![High Level Contract Interaction Topup](./images/Topup.png)

@@ -1,0 +1,25 @@
+
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+name: Github Release
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Convert to PDF
+      run: make latex
+    
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+      files: |
+        synthetic-asset-contract.pdf
