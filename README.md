@@ -19,11 +19,11 @@ Semi-formal description document is published with each [release](https://github
 ### Flow
 
 1. **Issuer** mints an asset with zero supply (ie. `sTSLA`)
-2. **Sponsor** locks collateral (ie. `USDt`) in the contract to mint the asset at current reference price, upon mutual agreement on liquidation target.
-3. If value of collateral is underwater, **Issuer** can liquidate the upon burning the asset and presenting Oracle's singature on reference price.
-4. **Sponsor** can prevent liquidation via collateral top-up in collaboration with issuer to create new contract.
+2. **Sponsor** locks collateral (ie. `USDt`) in the contract to mint the asset at the current reference price upon mutual agreement on liquidation target.
+3. If the collateral's value is underwater, **Issuer** can liquidate after burning the asset and presenting Oracle's signature on the reference price.
+4. **Sponsor** can prevent liquidation via collateral top-up in collaboration with the  **Issuer** to create a new contract.
 
-NOTICE: **Sponsor** can always redeem at all times in a non-interactive fashion his collateral, upon burning the asset and small payout to **Issuer**.
+NOTICE: **Sponsor** can always redeem at all times in a non-interactive fashion his collateral burning the asset and sending a payout fee to **Issuer**.
 
 
 
