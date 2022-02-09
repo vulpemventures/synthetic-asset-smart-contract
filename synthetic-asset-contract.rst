@@ -284,9 +284,9 @@ from floating-point calculations. Because of this, pairs of ratio values are use
 single fractional values.
 
 Parties have to perform the calculations in the same order of operations, as expressed in the formulas
-defined in this document. If the mathematically equivalent is used for
+defined in this document. If the mathematically equivalent formula is used for
 calculations, the order of arithmetic operations will likely be different, and that can affect
-the result, because the precision can be lost in integer division operation.
+the result because the precision can be lost in the integer division operation.
 
 The parties are assumed to be able to do integer arithmetic calculations with positive integers
 of at least 63 bits wide.
