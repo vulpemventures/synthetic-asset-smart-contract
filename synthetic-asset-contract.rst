@@ -46,7 +46,7 @@ The actors
 
 - Issuer
 
-  - Issues the Synth on request from the Sponsor
+  - Issues the Synth on request from the sponsor
   - Liquidates the Synth if the value of the collateral becomes inadequate
   - Takes profit in the form of the payout on redemption. The amount of payout
     is calculated based on the amount of Synth issued
@@ -64,7 +64,7 @@ The actors
 
 - Oracle
 
-  - Provides attestation of the price of RA for the Issuer to use in liquidation
+  - Provides attestation of the price of RA for the issuer to use in liquidation
 
 - Trader
 
@@ -76,9 +76,9 @@ by the contract.
 Main events of the contract
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Issuance: Sponsor and Issuer cooperate to mint new Synth
-- Redeem: Sponsor burns Synth to redeem the collateral
-- Liquidation: Issuer burns Synth and uses Oracle signature to confiscate the collateral
+- Issuance: sponsor and issuer cooperate to mint new Synth
+- Redeem: sponsor burns Synth to redeem the collateral
+- Liquidation: issuer burns Synth and uses Oracle signature to confiscate the collateral
 - Re-Issuance: The collateral is unlocked and sent to the new covenant (that is built
   with new parameters); more collateral may be added. The amount of Synth linked to the
   the old covenant is burned, and a different amount of synth is issued, according to current
@@ -87,7 +87,7 @@ Main events of the contract
 The mechanism of maintaining the price correspondence
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The crucial point for maintaining the price correspondence is that the Issuer will
+The crucial point for maintaining the price correspondence is that the issuer will
 only issue a new Synth when the amount of collateral locked corresponds to the current
 RA price and target collateralization ratio for the contract. The issuance is
 non-confidential, and the correctness of the issuance can be controlled by the public.
@@ -121,8 +121,8 @@ for taproot).
 
 The transaction output at index 0 shall be used for sending the collateral to the covenant
 on Issuance and Re-Issuance. Collateral shall not be sent in multiple outputs, and
-any outputs added by Sponsor that sends collateral to some covenant shall be ignored for
-public checking - because the Issuer cannot generally know if the address the Sponsor used
+any outputs added by sponsor that sends collateral to some covenant shall be ignored for
+public checking - because the issuer cannot generally know if the address the sponsor used
 to receive collateral 'change' is the address of some covenant or an ordinary address.
 Only output at index 0 shall be used for public checking of the fairness of (re)issuance. 
 
@@ -130,7 +130,7 @@ Issuance
 ~~~~~~~~
 
 - The sponsor informs the issuer of the amount of Synth they want to issue and the amount of
-  collateral they are ready to lock, the Oracle's pubkey they want to use, and the Sponsor's pubkey
+  collateral they are ready to lock, the Oracle's pubkey they want to use, and the sponsor's pubkey
 - The issuer checks that the amount of collateral is enough for the issuance of asked amount
   of Synth for the current RA price and pre-agreed collateralization ratio, and that the
   Oracle's pubkey is acceptable
@@ -138,29 +138,29 @@ Issuance
 
     * Issues expected amount of Synth
     * Sends collateral to the covenant that is built using current RA price, parameters
-      given by Sponsor, and pre-agreed parameters
-    * Includes (unsigned) input for the re-issuance token from the Issuer and the corresponding output
+      given by sponsor, and pre-agreed parameters
+    * Includes (unsigned) input for the re-issuance token from the issuer and the corresponding output
       to receive the re-issuance token. The input with re-issuance token also contains the non-confidential
       issuance data.
 
-- The issuer gives the transaction template to the Sponsor, along with Issuer's pubkey, the RA price
+- The issuer gives the transaction template to the sponsor, along with issuer's pubkey, the RA price
   that was used to build the covenant and possibly the oracle signature attesting this RA price
 - Sponsor checks the transaction template: checks the price against their own price source
   and/or against the oracle signature, checks the amount of Synth issued and the amount
   of collateral that is sent to the covenant
-- The sponsor builds the covenant using the parameters they have sent to the Issuer on the first step,
-  the Issuer's pubkey and the RA price offered by Issuer, and pre-agreed parameters.
+- The sponsor builds the covenant using the parameters they have sent to the issuer on the first step,
+  the issuer's pubkey and the RA price offered by issuer, and pre-agreed parameters.
 - The sponsor checks that the output script for the collateral sent to covenant in the transaction
-  template matches the covenant script built by Sponsor themself
+  template matches the covenant script built by sponsor themself
 - Sponsor adds their output(s) to receive the Synth
 - Sponsor adds their input(s) for the collateral and possibly an output to get back the excess
   amount of collateral
 - Sponsor adds their input(s) to pay the network fee and possibly an output to get back the excess
   amount of L-BTC used to pay the fee
 - Sponsor signs their inputs
-- The sponsor gives the updated and semi-signed transaction template back to the Issuer
-- The issuer takes the parts added by the Sponsor from the semi-signed transaction provided by
-  the Sponsor and adds them to their own transaction template. This way Issuer ensures that
+- The sponsor gives the updated and semi-signed transaction template back to the issuer
+- The issuer takes the parts added by the sponsor from the semi-signed transaction provided by
+  the sponsor and adds them to their own transaction template. This way issuer ensures that
   the data they built earlier is not modified (this includes the amount of collateral
   going to the covenant, the covenant output position and covenant script, the issuance data, etc...)
 - The issuer checks that the amount to pay the network fee is enough
@@ -174,7 +174,7 @@ Redeem
 
 - The sponsor acquires Synth from Trader or from new issuance
 - The sponsor builds the redeem transaction that burns the Synth and sends collateral back
-  to Sponsor, and the payout to the Issuer
+  to sponsor, and the payout to the issuer
 - Sponsor signs and broadcasts the transaction
 
 
@@ -196,8 +196,8 @@ Liquidation
 - The issuer acquires the required amount of Synth either from their own reserves or
   from Trader
 - The issuer builds a transaction that burns the Synth and sends the collateral to the issuer
-  (alternatively, splits collateral between Sponsor and the issuer based on the current
-  RA price, but possibly with a penalty against Sponsor)
+  (alternatively, splits collateral between sponsor and the issuer based on the current
+  RA price, but possibly with a penalty against sponsor)
 - The issuer signs and broadcasts the transaction
 
 
@@ -216,7 +216,7 @@ Re-Issuance
 - The sponsor informs the issuer of the utxo with locked collateral they want to use in
   re-issuance, new amount of Synth they want to issue, and the amount of collateral
   they want to be locked in the new covenant, the Oracle's pubkey they want to use for the
-  the new covenant, and the new Sponsor's pubkey
+  the new covenant, and the new sponsor's pubkey
 - The issuer checks that the new amount of collateral is enough for the issuance of asked
   the new amount of Synth for the current RA price and pre-agreed collateralization ratio,
   and that the Oracle's pubkey is acceptable
@@ -225,42 +225,42 @@ Re-Issuance
     * Has the old covenant utxo as one of the inputs
     * Burns the amount of Synth locked in the old covenant utxo, unlocking it
     * Sends collateral to the covenant that is built using current RA price, the new amount
-      of Synth and other parameters given by Sponsor, and pre-agreed parameters
+      of Synth and other parameters given by sponsor, and pre-agreed parameters
     * Issues new synth. The amount can be more or less than the amount burned. This depends
       on the current RA price and the amount of collateral to be locked in the new covenant,
       and pre-agreed parameters
-    * Includes (unsigned) input for the re-issuance token from the Issuer and the corresponding output
+    * Includes (unsigned) input for the re-issuance token from the issuer and the corresponding output
       to receive the re-issuance token. The input with re-issuance token also contains the non-confidential
       issuance data.
 
-- The Issuer gives the transaction template to the Sponsor, along with the new Issuer's pubkey, the RA price
+- The issuer gives the transaction template to the sponsor, along with the new issuer's pubkey, the RA price
   that was used to build the covenant and possibly the oracle signature attesting this RA price
 - Sponsor checks the transaction template: checks the price against their own price source
   and/or against the oracle signature, checks the amount of Synth issued and the amount
   of collateral that is sent to the covenant
-- The Sponsor builds the covenant using the parameters they have sent to the Issuer on the first step,
-  the Issuer's pubkey and the RA price offered by Issuer, and pre-agreed parameters.
-- The Sponsor checks that the output script for the collateral sent to covenant in the transaction
-  template matches the covenant script built by Sponsor themself
+- The sponsor builds the covenant using the parameters they have sent to the issuer on the first step,
+  the issuer's pubkey and the RA price offered by issuer, and pre-agreed parameters.
+- The sponsor checks that the output script for the collateral sent to covenant in the transaction
+  template matches the covenant script built by sponsor themself
 - Sponsor adds their input(s) with Synth to burn
 - If the amount of collateral locked in the old covenant is less than the amount to be locked in
-  the new covenant, Sponsor adds an input(s) with additional collateral
-- The Sponsor adds the output(s) to receive the newly issued Synth
+  the new covenant, sponsor adds an input(s) with additional collateral
+- The sponsor adds the output(s) to receive the newly issued Synth
 - If the sum of collateral in the inputs of the transaction exceeds the amount that needs to be
-  locked in the new covenant, the Sponsor adds an output to receive that excess of collateral
+  locked in the new covenant, the sponsor adds an output to receive that excess of collateral
 - Sponsor adds their input(s) to pay the network fee and possibly an output to get back the excess
   amount of L-BTC used to pay the fee
 - Sponsor signs their inputs
-- The Sponsor gives the updated and semi-signed transaction template back to the Issuer
-- The Issuer takes the parts added by Sponsor from the semi-signed transaction provided by
-  Sponsor and adds them to their transaction template. This way the Issuer ensures that
+- The sponsor gives the updated and semi-signed transaction template back to the issuer
+- The issuer takes the parts added by sponsor from the semi-signed transaction provided by
+  sponsor and adds them to their transaction template. This way the issuer ensures that
   the data they built earlier is not modified (this includes the amount of collateral
   going to the covenant, the covenant output position and covenant script, the issuance data, etc...)
-- The Issuer checks that the amount to pay the network fee is enough
+- The issuer checks that the amount to pay the network fee is enough
 - Issuer signs their input that provides the re-issuance token
-- The Issuer checks that the price did not move to make the issuance transaction not worth
+- The issuer checks that the price did not move to make the issuance transaction not worth
   broadcasting
-- The Issuer broadcasts the re-issuance transaction
+- The issuer broadcasts the re-issuance transaction
 
 
 .. figure:: ./images/Topup.png
@@ -306,8 +306,8 @@ Parameters of the covenant
 - :m:`S_{P}` - price ratio scale
 - :m:`V_{R}` - collateralization ratio value
 - :m:`S_{R}` - collateralization ratio scale
-- :m:`V_{I}` - payout to the Issuer ratio value
-- :m:`S_{I}` - payout to the Issuer ratio scale
+- :m:`V_{I}` - payout to the issuer ratio value
+- :m:`S_{I}` - payout to the issuer ratio scale
 - :m:`D_{lock}` - duration of lock-up period after (re)issuance. During this period,
   redeem is impossible
 - :m:`pub_{O}` - Oracle's pubkey that will be attesting RA price for liquidation
@@ -332,7 +332,7 @@ The following must hold:
 
 - :m:`V_{R} \ne 0` because this would mean infinite collateral requirement.
 
-- :m:`V_{I} >= 0`, zero is allowed because the Issuer may agree to zero payout
+- :m:`V_{I} >= 0`, zero is allowed because the issuer may agree to zero payout
 
 - :m:`D_{lock} >= 0`, zero is allowed because participants can agree that there will be no lock-up period
 
@@ -349,15 +349,15 @@ The following must hold:
   If it is acceptable to have the granularity of collateralization ratio as one percent, then :m:`S_{R}`
   can be said to be the constant 100. For the granularity of 0.5%, it can be the constant 200, etc.
 
-- :m:`S_{I} > V_{I}`, because the payout to the Issuer is expected to have less monetary value than
+- :m:`S_{I} > V_{I}`, because the payout to the issuer is expected to have less monetary value than
   the monetary value of Synth issued.
 
 - The calculation of the liquidation target threshold with the provided parameters is successful
   (see "`Calculating liquidation target`_" section).
 
 :m:`D_{lock}` can be measured in seconds or blocks. It can represent absolute time
-or the time relative to the contract transaction broadcast, as chosen by the Issuer and
-agreed to by the Sponsor.
+or the time relative to the contract transaction broadcast, as chosen by the issuer and
+agreed to by the sponsor.
 
 :m:`V_{R}`, :m:`S_{R}`, :m:`V_{I}`, :m:`S_{I}`, :m:`D_{lock}` are pre-agreed beforehand.
 
@@ -367,36 +367,36 @@ particular asset pair and to respect the technical requirements of the covenant
 
 :m:`V_{P}` is taken from the price source and is attested by Oracle.
 
-:m:`pub_{O}` is provided by Sponsor, but is chosen from the list of oracles
-that the Issuer accepts. This pubkey needs to be unique for each combination of
+:m:`pub_{O}` is provided by sponsor, but is chosen from the list of oracles
+that the issuer accepts. This pubkey needs to be unique for each combination of
 {RA, asset of collateral, :m:`S_{P}`}.
 
-:m:`pub_{I}` and :m:`pub_{S}` are provided by the Issuer and Sponsor, respectively.
+:m:`pub_{I}` and :m:`pub_{S}` are provided by the issuer and sponsor, respectively.
 
 There's no restriction to the relation between :m:`S_{P}` and :m:`V_{P}`, because the price
 can vary freely. For example, :m:`S_{P} = 1000`, can be used to express that one unit of RA costs
 1.5 units of collateral, and then :m:`V_{P}` will be 1500. To express that one unit of RA costs
 0.1 units of collateral, :m:`V_{P}` will be 100.
 
-Payout to the Issuer
+Payout to the issuer
 ~~~~~~~~~~~~~~~~~~~~
 
 The amount of payout on redeem case has to be calculated before the collateral is sent to be locked
-in the covenant. This is because the Sponsor can perform the redeem unilaterally, and the covenant
-that locks the collateral has to enforce that the proper amount is sent to the Issuer as the payout.
+in the covenant. This is because the sponsor can perform the redeem unilaterally, and the covenant
+that locks the collateral has to enforce that the proper amount is sent to the issuer as the payout.
 
 It is the most convenient to send the payout in the asset of the collateral because the collateral
 input will be surely present in the transaction, and the payout amount can be simply subtracted
-from the amount sent to the Sponsor.
+from the amount sent to the sponsor.
 
-If the payout is in the asset different from the asset of collateral, then the Sponsor will need
+If the payout is in the asset different from the asset of collateral, then the sponsor will need
 to add an additional input bearing this asset to the redeem transaction (unless the payout is in
-L-BTC, in this case, the Sponsor can use the same input for the network fee and for the payout).
-The Sponsor bears the risks of the 'payout asset' price going up, as the amount is fixed on the
-contract setup, but the Sponsor will need to provide the funds to pay for payout at the time
+L-BTC, in this case, the sponsor can use the same input for the network fee and for the payout).
+The sponsor bears the risks of the 'payout asset' price going up, as the amount is fixed on the
+contract setup, but the sponsor will need to provide the funds to pay for payout at the time
 of redeem.
 
-The Issuer bears the risks of the monetary value of the payout diminishing. Given that Sponsors
+The issuer bears the risks of the monetary value of the payout diminishing. Given that Sponsors
 are more likely to redeem when the value of the collateral has risen relative to the value of Synth,
 this risk is lower when the payout is in the asset of collateral.
 
@@ -418,7 +418,7 @@ Because the fractional value cannot be paid out, only the integer value of the p
 
 If the price of the payout asset is high, the monetary value of the discarded fractional part may happen
 to be significant. If the payout value is zero or too small, or the monetary value of discarded fractional
-part is too high, the Issuer is expected to to either deny the (re)issuance to the Sponsor or use
+part is too high, the issuer is expected to to either deny the (re)issuance to the sponsor or use
 some other asset for the payout, if possible.
 
 Price representation
@@ -467,9 +467,9 @@ Redeem
 The redeem covenant case have to ensure that:
 
 - The exact amount of Synth that was issued when the covenant utxo was created, is burned
-- The Issuer receives the payout as agreed at contract setup
+- The issuer receives the payout as agreed at contract setup
 - If :m:`D_{lock}` is non-zero, then the timeout period has passed
-- The Sponsor authorizes the redeem
+- The sponsor authorizes the redeem
 
 To ensure these, the covenant has to check:
 
@@ -480,7 +480,7 @@ To ensure these, the covenant has to check:
 - There is a signature over the entire transaction (SIGHASH_ALL signature type, or "default" type
   for taproot), that is successfully verified against :m:`pub_{S}`
 
-The payout can be in any asset, as long as this is agreed on at contract setup time. The Sponsor will
+The payout can be in any asset, as long as this is agreed on at contract setup time. The sponsor will
 need to provide appropriate input to be able to satisfy the payout requirement. If the payout is
 in the asset of collateral, then the same collateral input that is unlocked can provide the funds
 for payout.
@@ -494,7 +494,7 @@ The witness stack to the covenant input shall contain:
 
 The transaction output at index 0 shall be the output that burns Synth
 
-The transaction output at index 1 shall be the output that sends payout to the Issuer
+The transaction output at index 1 shall be the output that sends payout to the issuer
 
 
 Liquidation
@@ -511,7 +511,7 @@ The relation of 'price level' and the 'price ratio' is described above in the
 "`Price representation`_" section. It is encoded as a low-endian 64-bit *signed* integer.
 
 The other number is the 'time of signature creation' (:m:`t_{sig}`). It can be measured
-in any integral unit, as long as the Oracle uses the units consistently and the Issuer
+in any integral unit, as long as the Oracle uses the units consistently and the issuer
 can calculate the time of the contract setup (:m:`t_{setup}`) represented in that units.
 It is encoded as a low-endian 32-bit *unsigned* integer
 
@@ -522,7 +522,7 @@ The Oracle's pubkey that attests to the 'price data block' is expected to be uni
 each combination of {RA, asset of collateral, :m:`S_{P}`}.
 
 The covenant could also restrict the destination address and the amount of the collateral
-as a protection measure for the event when both the Issuer's key and the Oracle's key are compromised.
+as a protection measure for the event when both the issuer's key and the Oracle's key are compromised.
 Such restriction will allow sending the collateral only to the pre-determined address that
 can be controlled by a separate key that is held in cold storage, for example.
 
@@ -539,7 +539,7 @@ The liquidation covenant case has to ensure that:
 - The signature from Oracle was created after the contract setup
 - The signature from Oracle that attests to the price data block is valid
 - The exact amount of Synth that was issued when the covenant utxo was created, is burned
-- The Issuer authorizes the liquidation
+- The issuer authorizes the liquidation
 
 To ensure these, the covenant has to check:
 
@@ -564,7 +564,7 @@ The witness stack for the covenant input shall contain:
 The transaction output at index 0 shall be the output that burns Synth
 
 Optionally, but recommended, the covenant should check that output at index 1 is the unconfidential
-output that sends the full amount of collateral to the address of the Issuer's cold storage
+output that sends the full amount of collateral to the address of the issuer's cold storage
 (see the discussion of the case when both `Issuer and Oracle`_ keys are compromised, in
 "`Potential attack vectors`_" section). 
 
@@ -575,8 +575,8 @@ Re-Issuance
 The re-issuance covenant case has to ensure that:
 
 - The exact amount of Synth that was issued when the covenant utxo was created, is burned
-- The Issuer authorizes the re-issuance
-- The Sponsor authorizes the re-issuance
+- The issuer authorizes the re-issuance
+- The sponsor authorizes the re-issuance
 
 To ensure these, the covenant has to check:
 
@@ -588,15 +588,15 @@ To ensure these, the covenant has to check:
   for taproot) that is successfully verified against :m:`pub_{S}`
 
 This makes this case essentially a combination of the redeem and issuance action.
-The 'synth is burned' check and 'authorization from Sponsor' check are from the
-redeem covenant case, and the 'authorization from Issuer' is what is required for
+The 'synth is burned' check and 'authorization from sponsor' check are from the
+redeem covenant case, and the 'authorization from issuer' is what is required for
 the issuance.
 
-We check for signature from the Issuer instead of the presence of the input that commands
+We check for signature from the issuer instead of the presence of the input that commands
 issuance of new Synth. This scheme of 'synth burn plus 2of2 multisig of sponsor & issuer'
 enables the possibility of using the same covenant case for the 'cooperative redeem' action
 where the payout is not pre-calculated and committed to in the covenant but is authorized
-by the Issuer at the time of redemption.
+by the issuer at the time of redemption.
 
 The two signatures can be combined into one Schnorr signature over the combined
 :m:`(pub_{I} + pub_{S})` key. The covenant code below assumes that there are two separate
@@ -620,13 +620,13 @@ Compromise of the keys
 Issuer
 ######
 
-The Issuer will need to have operative access to the keys controlling the following:
+The issuer will need to have operative access to the keys controlling the following:
 
 - Synth reserve for use in liquidations
 - Reissuance token used for Issuance and Re-Issuance of Synth
 
 Compromising the keys controlling the Synth reserve will result in losses only for the
-Issuer. This attack vector is therefore not specific to the described contract and is
+issuer. This attack vector is therefore not specific to the described contract and is
 generic to working with digital assets.
 
 Compromising the keys controlling the re-issuance token will result in a catastrophic
@@ -655,10 +655,10 @@ Oracle
 If the oracle key is compromised, it will be possible to un-tie the price-related actions from
 the actual price reference that the oracle is supposed to provide. The price-related actions
 are issuance, re-issuance, and liquidation. Per the described contract, all three actions
-require participation from the Issuer, and only the liquidation can be done unilaterally,
-the (re)issuance require the participation of the Sponsor. Therefore, when only the Issuer is
+require participation from the issuer, and only the liquidation can be done unilaterally,
+the (re)issuance require the participation of the sponsor. Therefore, when only the issuer is
 allowed to liquidate, the malicious liquidation will require the compromise of both the
-Oracle and the Issuer.
+Oracle and the issuer.
 
 Issuer and Oracle
 #################
@@ -683,14 +683,14 @@ even if the re-issuance token is controlled by the covenant that requires the or
 attesting the minimum amount of collateral. But such oracle is not necessary the same oracle that is
 used in the liquidation. It does not even need to be public (it does not need to publicly release
 its signatures), as it only protects the issuance process. It can be a specialized oracle maintained by
-the Issuer themself on a separated, protected system with a one-way communication channel
+the issuer themself on a separated, protected system with a one-way communication channel
 to the system that hosts the issuance infrastructure (can only send the signatures,
 cannot receive any information back)
 
 Sponsor
 #######
 
-Compromise of the Sponsor's keys only affects themself and does not have any effect on other
+Compromise of the sponsor's keys only affects themself and does not have any effect on other
 participants in the contract. This attack vector is therefore not specific to the described
 contract and is generic to working with digital assets.
 
@@ -709,19 +709,19 @@ Synth may lead to losses due to price movements or penalties when timeouts expir
 Oracle
 ######
 
-Denying the participants access to Oracle signatures may mean that the Issuer will not be able to
+Denying the participants access to Oracle signatures may mean that the issuer will not be able to
 perform liquidations.
 
 This may lead to the Synth becoming under-collateralized, and then direct and indirect losses
-to the Issuer as a consequence. Direct losses when they eventually are able to liquidate,
+to the issuer as a consequence. Direct losses when they eventually are able to liquidate,
 but the price has moved so much that the collateral is cheaper than RA referenced by the Synth.
-If the Issuer holds the reserve of Synth, they get losses from the monetary value of that reserve
+If the issuer holds the reserve of Synth, they get losses from the monetary value of that reserve
 diminishing due to under-collateralization. Indirect losses are mainly reputational due to the Synth
 they issue disassociating from the price of the reference asset because of under-collateralization.
 
 Sponsors are less affected by this unless they hold a significant amount of Synth, as they can do
 redeem if they can get enough Synth to do so (and Synth that may be cheaper at that time). But
-if all oracles are not available, the Issuer may stop issuing Synth, so the Sponsors will be left
+if all oracles are not available, the issuer may stop issuing Synth, so the Sponsors will be left
 to find Synth on the open market, but the behavior of the market in this situation is hard to predict.
 
 Traders may be at loss because of dissociation of the price of Synth and RA price.
@@ -729,12 +729,12 @@ Traders may be at loss because of dissociation of the price of Synth and RA pric
 Data loss
 ~~~~~~~~~
 
-The loss of the keys to controlling the re-issuance tokens by the Issuer means that no more Synth can
+The loss of the keys to controlling the re-issuance tokens by the issuer means that no more Synth can
 be issued. Some of the Synth in circulation may become permanently unavailable (loss of keys, burning
 or locked forever due to mistakes or errors). In case when new Synth cannot be issued, and some
 of the previously issued Synth is unavailable, some amount of the locked collateral will become
 impossible to redeem, simply because the amount of available Synth is less than the total amount of
-collateral locked. The Issuer should pay the utmost attention to the *safety* of the storage
+collateral locked. The issuer should pay the utmost attention to the *safety* of the storage
 of the keys that control re-issuance tokens.
 
 To spend the collateral locked in the covenant, the spender will need to provide the script that
@@ -743,13 +743,13 @@ can be rebuilt if the parameters of the covenant are known. But if the script an
 are lost, finding the right parameters to get to the correct script may take time, especially
 if the parameters were chosen as part of some automated process. Therefore the Sponsors should be
 advised to not only store their keys, but the parameters to the covenants too, to be able to do
-redeem even if the Issuer has suffered a full data loss.
+redeem even if the issuer has suffered a full data loss.
 
 Data modification
 ~~~~~~~~~~~~~~~~~
 
-It is possible that the attacker may be able to modify data that is exchanged between the Sponsor
-and the Issuer on (re)issuance. The procedures for issuance and re-issuance must be engineered
+It is possible that the attacker may be able to modify data that is exchanged between the sponsor
+and the issuer on (re)issuance. The procedures for issuance and re-issuance must be engineered
 in a way so that any malicious alternations of data be detected by one of the participants before
 the transaction is broadcasted. Semi-signed transactions must not be able to be broadcasted without
 authorization with the signature(s) of the other party (that is, the outputs must contain some assets
@@ -760,7 +760,7 @@ Real-world attacks
 
 The issuer can be the target of various attacks in the real world, like physical attacks on
 infrastructure, equipment, personnel. It can also be the target of legal attacks.
-These can hinder the operation of the Issuer to the effect of denial of service, data loss,
+These can hinder the operation of the issuer to the effect of denial of service, data loss,
 data modification, or key compromise. Mitigation of such attacks is out of scope for this document.
 
 Low-level attack vectors
@@ -774,7 +774,7 @@ the inputs supplied by the participants, but this structure is expected to be a 
 overall transaction data, and in this case it cannot be manipulated.
 
 For redeem case, the only required witness to spend the covenant-locked input is the signature
-from the Sponsor. Other entities cannot manipulate this witness.
+from the sponsor. Other entities cannot manipulate this witness.
 
 For liquidation case, the values of :m:`P_{cur}` and :m:`t_{sig}` can be swapped in the broadcasted
 transaction, as long as there is the valid signature from the Oracle that attests to these other values.
@@ -783,11 +783,11 @@ will not change. The condition "there exists an oracle-attested price data block
 below target and is produced after the start of the contract" is satisfied regardless of which
 price data block is used - it is still attested by the Oracle. This possible witness data
 manipulation can be prevented by requiring that the price data block be additionally attested
-by the Issuer, but because such manipulation will not have an effect on the outcome of the transaction,
+by the issuer, but because such manipulation will not have an effect on the outcome of the transaction,
 it does not justify adding another 64 bytes of the extra signature to the witness.
 
 For the re-issuance case, the only required witness to spend the covenant-locked input is the signature
-from the Sponsor and the Issuer. Other entities cannot manipulate this witness.
+from the sponsor and the issuer. Other entities cannot manipulate this witness.
 
 Transaction pinning in mempool
 ##############################
@@ -804,29 +804,29 @@ Transaction pinning can be mitigated by "CPFP carve-out": https://bitcoinops.org
 For CPFP carve-out to be effective, the transaction should have only one output that can be controlled
 by the party that can possibly execute an attack.
 
-In the issuance and re-issuance transactions, the Issuer control the 're-issuance token' output, and
+In the issuance and re-issuance transactions, the issuer control the 're-issuance token' output, and
 they could also control the 'L-BTC change' output where they receive the excess L-BTC, if they were
-supplying the funds for paying the fee. This can allow the Issuer to pin the transaction in the mempool,
-since they would control two outputs of the transaction. This is not a big risk, though, as the Issuer
-can deny issuance to the Sponsor in much more easy ways. Transaction pinning, in theory, could be a
+supplying the funds for paying the fee. This can allow the issuer to pin the transaction in the mempool,
+since they would control two outputs of the transaction. This is not a big risk, though, as the issuer
+can deny issuance to the sponsor in much more easy ways. Transaction pinning, in theory, could be a
 'disguised' way to delay the issuance, as pinning could be explained by the 'unfortunate technical
 circumstances' or the like.
 
-If the Sponsor provides L-BTC for the fee to be used in (re)issuance, then such pinning is not possible.
+If the sponsor provides L-BTC for the fee to be used in (re)issuance, then such pinning is not possible.
 
-The Sponsor will control more than two outputs in the issuance transaction and thus can deny the use
-of 'CPFP carve-out' for the Issuer. This may delay the consequent use of the re-issuance token by
-the Issuer.
+The sponsor will control more than two outputs in the issuance transaction and thus can deny the use
+of 'CPFP carve-out' for the issuer. This may delay the consequent use of the re-issuance token by
+the issuer.
 
 To avoid such delays more than one re-issuance token utxo can be used in parallel.
 
-The redeem transaction is expected to have only one output that is controlled by the Issuer, so there
-is no way for the Issuer to deny the use of 'CPFP carve-out' by the Sponsor.
+The redeem transaction is expected to have only one output that is controlled by the issuer, so there
+is no way for the issuer to deny the use of 'CPFP carve-out' by the sponsor.
 
 The liquidation transaction has all outputs going to one entity, in case the full amount of the collateral
-is confiscated by the Issuer. If some of the collateral is returned to the Sponsor, it is still only
-one output that is controlled by the sponsor, and thus there is no way for the Sponsor to deny the use of
-'CPFP carve-out' to the Issuer.
+is confiscated by the issuer. If some of the collateral is returned to the sponsor, it is still only
+one output that is controlled by the sponsor, and thus there is no way for the sponsor to deny the use of
+'CPFP carve-out' to the issuer.
 
 Transaction censoring
 #####################

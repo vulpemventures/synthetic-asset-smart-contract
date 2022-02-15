@@ -228,7 +228,7 @@ Redeem covenant case
    //    output_1_scriptPubKey_witVersion
    //    output_1_scriptPubKey_info
    //    sponsor_signature
-   OP_1,   // Assuming the Issuer's address is P2TR
+   OP_1,   // Assuming the issuer's address is P2TR
 
    // stack:
    //    1
@@ -242,7 +242,7 @@ Redeem covenant case
    // stack:
    //    output_1_scriptPubKey_info
    //    sponsor_signature
-   DATA(<issuer_address_scriptPubKey_witProgram>)  // the address was generated using Issuer's pubkey
+   DATA(<issuer_address_scriptPubKey_witProgram>)  // the address was generated using issuer's pubkey
 
    // stack:
    //    issuer_address_scriptPubKey_witProgram
@@ -251,7 +251,7 @@ Redeem covenant case
    OP_EQUALVERIFY
 
    // We checked that the scriptPubKey of the output at index 1 is equal to scriptPubKey
-   // of the Issuer's address
+   // of the issuer's address
 
    // stack:
    //    sponsor_signature
@@ -276,7 +276,7 @@ Redeem covenant case
    // We checked that the nonce of the output at index 1 is equal to empty data array,
    // that means that the output is not confidential.
 
-   // (*) We checked that transaction output at index 1 sends the expected payout amount to Issuer
+   // (*) We checked that transaction output at index 1 sends the expected payout amount to issuer
 
    // ------------------------------------------
    // LOCKUP_PERIOD_CHECK_CODE_START
@@ -318,8 +318,8 @@ Redeem covenant case
    // We used OP_CHECKSIG (non-VERIFY) because this is the end of the script. Cleanstack rule states
    // that successful execution of the script must leave a single true value on the stack.
 
-   // (*) We checked that the transaction is authorized by Sponsor.
-   // It is expected that Sponsor will not produce signatures
+   // (*) We checked that the transaction is authorized by sponsor.
+   // It is expected that sponsor will not produce signatures
    // with sighash type different from the default type (equivalent in effect to SIGHASH_ALL),
    // so we do not check the type.
    //
@@ -587,7 +587,7 @@ Liquidation covenant case
 
 
    // For the sake of brevity, we do not check here that output at index 1 sends
-   // the full collateral to the Issuer's cold storage address.
+   // the full collateral to the issuer's cold storage address.
    // We recommend to implement this check though, as a defence-in-depth measure.
 
    // stack:
@@ -602,8 +602,8 @@ Liquidation covenant case
    // We used OP_CHECKSIG (non-VERIFY) because this is the end of the script. Cleanstack rule states
    // that successful execution of the script must leave a single true value on the stack.
 
-   // (*) We checked that the transaction is authorized by Issuer.
-   // It is expected that Issuer will not produce signatures
+   // (*) We checked that the transaction is authorized by issuer.
+   // It is expected that issuer will not produce signatures
    // with sighash type different from the default type (equivalent in effect to SIGHASH_ALL),
    // so we do not check the type.
 
@@ -781,8 +781,8 @@ Re-Issuance covenant case
    //    sponsor_signature
    OP_CHECKSIGVERIFY
 
-   // (*) We checked that the transaction is authorized by Issuer.
-   // It is expected that Issuer will not produce signatures
+   // (*) We checked that the transaction is authorized by issuer.
+   // It is expected that issuer will not produce signatures
    // with sighash type different from default (equivalent in effect to SIGHASH_ALL),
    // so we do not check the type.
 
@@ -798,8 +798,8 @@ Re-Issuance covenant case
    // We used OP_CHECKSIG (non-VERIFY) because this is the end of the script. Cleanstack rule states
    // that successful execution of the script must leave a single true value on the stack.
 
-   // (*) We checked that the transaction is authorized by Sponsor.
-   // It is expected that Issuer will not produce signatures
+   // (*) We checked that the transaction is authorized by sponsor.
+   // It is expected that issuer will not produce signatures
    // with sighash type different from default (equivalent in effect to SIGHASH_ALL),
    // so we do not check the type.
 
