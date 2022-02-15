@@ -242,7 +242,7 @@ Re-Issuance
   the Issuer's pubkey and the RA price offered by Issuer, and pre-agreed parameters.
 - The Sponsor checks that the output script for the collateral sent to covenant in the transaction
   template matches the covenant script built by Sponsor themself
-- Sponsor adds their input(s) with Synth to burn (the total amount must be equal to the amount to burn)
+- Sponsor adds their input(s) with Synth to burn
 - If the amount of collateral locked in the old covenant is less than the amount to be locked in
   the new covenant, Sponsor adds an input(s) with additional collateral
 - The Sponsor adds the output(s) to receive the newly issued Synth
@@ -279,12 +279,12 @@ Rules for calculations
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The parties have to get the same results when calculating contract parameters from the same
-input values, and therefore have to use integer arithmetic to avoid any discrepancies resulting
+input values and therefore have to use integer arithmetic to avoid any discrepancies resulting
 from floating-point calculations. Because of this, pairs of ratio values are used instead of
 single fractional values.
 
 Parties have to perform the calculations in the same order of operations, as expressed in the formulas
-defined in this document. If the mathematically equivalent formula is used for
+defined in this document. If the mathematically equivalent, but different formula is used for
 calculations, the order of arithmetic operations will likely be different, and that can affect
 the result because the precision can be lost in the integer division operation.
 
@@ -316,9 +316,9 @@ Parameters of the covenant
 
 The above parameters are positive or non-negative integers, except for the pubkeys.
 
-The "ratio value" is the numerator in of the fraction that represents the ratio.
+The "ratio value" is the numerator of the fraction that represents the ratio.
 
-The "ratio scale" is the denominator in of the fraction that represents the ratio.
+The "ratio scale" is the denominator of the fraction that represents the ratio.
 
 The following must hold:
 
@@ -580,7 +580,7 @@ The re-issuance covenant case has to ensure that:
 
 To ensure these, the covenant has to check:
 
-- There is transaction non-confidential output that burns the expected amount of Synth
+- There is a non-confidential transaction output that burns the expected amount of Synth
   via sending it to the OP_RETURN script
 - There is a signature over the entire transaction (SIGHASH_ALL signature type, or "default" type
   for taproot) that is successfully verified against :m:`pub_{I}`
